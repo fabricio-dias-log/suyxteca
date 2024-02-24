@@ -1,40 +1,52 @@
 {
   "thoughts": [
     {
-      "id": 1,
+      "id": "1",
       "content": "I'm thinking about the future",
       "author": "Someone",
       "model": "modelo1"
     },
     {
-      "id": 2,
+      "id": "2",
       "content": "I'm thinking about the past",
       "author": "Fabricio",
       "model": "modelo2"
     },
     {
-      "id": 3,
+      "id": "3",
       "content": "I'm thinking about the present",
       "author": "Dev",
       "model": "modelo1"
     },
     {
-      "id": 4,
+      "id": "4",
       "content": "Never go Back",
       "author": "Someone",
       "model": "modelo2"
     },
     {
-      "id": 5,
+      "id": "5",
       "content": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged",
       "author": "Fabricio",
       "model": "modelo1"
     },
     {
-      "id": 6,
+      "id": "6",
       "content": "Just Do It",
       "author": "Nike",
       "model": "modelo2"
+    },
+    {
+      "id": "9a57",
+      "content": "This is a ralley can i toutch your big tits? awesome, im really happy now, i love you",
+      "author": "Fabricio Lelé da cuca",
+      "model": "modelo2"
+    },
+    {
+      "id": "b4b3",
+      "content": "This is a ralley can i toutch your big tits? awesome, im really happy now, i love you",
+      "author": "Fabricio Lelé da cuca",
+      "model": "modelo3"
     }
   ]
 }

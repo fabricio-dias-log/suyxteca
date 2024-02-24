@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
+import {ThoughtService} from "../thought.service";
 import {FormsModule} from "@angular/forms";
-import {RouterLink} from "@angular/router";
+import {Router, RouterLink} from "@angular/router";
 import {Thought} from "../thought";
 
 @Component({
@@ -15,16 +16,19 @@ import {Thought} from "../thought";
 })
 export class CreateThoughtsComponent {
   thoughts: Thought = {
-    id: 1,
-    content: 'This is a thought',
-    author: 'Dev',
+    content: '',
+    author: '',
     model: ''
   }
-  createThought() {
-    alert('Thought created')
+  constructor(private service: ThoughtService, private router: Router) {
+  }
+  handleCreateThought() {
+    this.service.createThought(this.thoughts).subscribe(()=>{
+      this.router.navigate(['/listThoughts'])
+    });
   }
 
   cancelThought() {
-    alert('Thought cancelled')
+    this.router.navigate(['/listThoughts'])
   }
 }
