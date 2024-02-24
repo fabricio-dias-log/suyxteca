@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {RouterLink} from "@angular/router";
 import {ThoughtComponent} from "../thought/thought.component";
 import {NgForOf, NgIf} from "@angular/common";
 import {Thought} from "../thought";
+import {ThoughtService} from "../thought.service";
 
 @Component({
   selector: 'app-thoughts-list',
@@ -16,6 +17,12 @@ import {Thought} from "../thought";
   templateUrl: './thoughts-list.component.html',
   styleUrl: './thoughts-list.component.css'
 })
-export class ThoughtsListComponent {
+export class ThoughtsListComponent implements OnInit{
   thoughtsList: Thought[] = [];
+  constructor(private service: ThoughtService) {
+  }
+  ngOnInit() {
+    this.service.getThoughts().subscribe(thoughts => this.thoughtsList = thoughts);
+  }
+
 }
