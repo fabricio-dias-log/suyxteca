@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {ThoughtService} from "../thought.service";
-import {FormsModule} from "@angular/forms";
+import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {Router, RouterLink} from "@angular/router";
 import {Thought} from "../thought";
 
@@ -9,21 +9,27 @@ import {Thought} from "../thought";
   standalone: true,
   imports: [
     FormsModule,
-    RouterLink
+    RouterLink,
+    ReactiveFormsModule
   ],
   templateUrl: './create-thoughts.component.html',
   styleUrl: './create-thoughts.component.css'
 })
 export class CreateThoughtsComponent {
-  thoughts: Thought = {
-    content: '',
-    author: '',
-    model: ''
-  }
-  constructor(private service: ThoughtService, private router: Router) {
+  form!: FormGroup
+  constructor(
+    private service: ThoughtService,
+    private router: Router,
+    private formBuilder: FormBuilder
+  ) {
+    this.form = this.formBuilder.group({
+      content: ['Content'],
+      author: ['Author'],
+      model: ['modelo1']
+    })
   }
   handleCreateThought() {
-    this.service.createThought(this.thoughts).subscribe(()=>{
+    this.service.createThought(this.form.value).subscribe(()=>{
       this.router.navigate(['/thoughts'])
     });
   }
