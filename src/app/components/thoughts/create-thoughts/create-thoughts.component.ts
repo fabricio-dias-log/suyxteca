@@ -3,6 +3,7 @@ import {ThoughtService} from "../thought.service";
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {Router, RouterLink} from "@angular/router";
 import {Thought} from "../thought";
+import {NgIf} from "@angular/common";
 
 @Component({
   selector: 'app-create-thoughts',
@@ -10,7 +11,8 @@ import {Thought} from "../thought";
   imports: [
     FormsModule,
     RouterLink,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgIf
   ],
   templateUrl: './create-thoughts.component.html',
   styleUrl: './create-thoughts.component.css'
