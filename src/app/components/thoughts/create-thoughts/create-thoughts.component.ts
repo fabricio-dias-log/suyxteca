@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {ThoughtService} from "../thought.service";
-import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {Router, RouterLink} from "@angular/router";
 import {Thought} from "../thought";
 
@@ -23,15 +23,26 @@ export class CreateThoughtsComponent {
     private formBuilder: FormBuilder
   ) {
     this.form = this.formBuilder.group({
-      content: ['Content'],
-      author: ['Author'],
-      model: ['modelo1']
+      content: ['', Validators.compose([
+          Validators.required,
+          Validators.pattern(/(.|s)*\S(.|s)*/)
+        ])
+      ],
+      author: ['', Validators.compose([
+          Validators.required,
+          Validators.minLength(3)
+        ])
+      ],
+      model: ['modelo1', [Validators.required]]
     })
   }
   handleCreateThought() {
-    this.service.createThought(this.form.value).subscribe(()=>{
-      this.router.navigate(['/thoughts'])
-    });
+    console.log(this.form)
+    if (this.form.valid) {
+      this.service.createThought(this.form.value).subscribe(() => {
+        this.router.navigate(['/thoughts'])
+      });
+    }
   }
 
   cancelThought() {
