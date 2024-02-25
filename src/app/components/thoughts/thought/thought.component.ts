@@ -1,12 +1,14 @@
 import {Component, Input} from '@angular/core';
 import {NgClass} from "@angular/common";
 import {Thought} from "../thought";
+import {RouterLink} from "@angular/router";
 
 @Component({
   selector: 'app-thought',
   standalone: true,
   imports: [
-    NgClass
+    NgClass,
+    RouterLink
   ],
   templateUrl: './thought.component.html',
   styleUrl: './thought.component.css'
