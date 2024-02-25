@@ -26,13 +26,12 @@ export class DeleteThoughtComponent implements OnInit{
 
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
-    this.service.getThoughtById(parseInt(id!)).subscribe(thought => this.thought = thought);
+    alert(id);
+    this.service.getThoughtById(id!).subscribe(thought => this.thought = thought);
   }
 
   removeThought(){
-    if (!this.thought.id) return;
-
-    this.service.deleteThought(this.thought.id).subscribe(() => this.router.navigate(['/thoughts']));
+    this.service.deleteThought(this.thought).subscribe(() => this.router.navigate(['/thoughts']));
   }
 
   cancel(){
