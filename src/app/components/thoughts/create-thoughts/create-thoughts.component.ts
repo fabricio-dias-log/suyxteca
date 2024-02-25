@@ -24,11 +24,11 @@ export class CreateThoughtsComponent {
   }
   handleCreateThought() {
     this.service.createThought(this.thoughts).subscribe(()=>{
-      this.router.navigate(['/listThoughts'])
+      this.router.navigate(['/thoughts'])
     });
   }
 
   cancelThought() {
-    this.router.navigate(['/listThoughts'])
+    this.router.navigate(['/thoughts'])
   }
 }
