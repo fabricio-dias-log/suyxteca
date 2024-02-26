@@ -10,7 +10,7 @@
         formControlName="content"
         placeholder="Digite o pensamento"
       >
-      <div class="error__message" *ngIf="form.get('content')?.errors && form.get('content')?.touched" >
+      <div class="error__message" *ngIf="form.get('content')?.errors && form.get('content')?.touched">
         Content is required
       </div>
 
@@ -96,7 +96,12 @@
 
       </div>
       <div class="acoes">
-        <button class="botao" (click)="handleCreateThought()">Salvar</button>
+        <button
+          [disabled]="!form.invalid"
+          [ngClass]="enableButton()"
+          (click)="handleCreateThought()">
+          Salvar
+        </button>
         <button class="botao" (click)="cancelThought()">Cancelar</button>
       </div>
     </form>

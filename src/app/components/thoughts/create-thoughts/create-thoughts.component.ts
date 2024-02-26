@@ -3,7 +3,8 @@ import {ThoughtService} from "../thought.service";
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {Router, RouterLink} from "@angular/router";
 import {Thought} from "../thought";
-import {NgIf} from "@angular/common";
+import {NgClass, NgIf} from "@angular/common";
+import {lowerCaseValidator} from "../../../validators/lowerCase.validator";
 
 @Component({
   selector: 'app-create-thoughts',
@@ -12,7 +13,8 @@ import {NgIf} from "@angular/common";
     FormsModule,
     RouterLink,
     ReactiveFormsModule,
-    NgIf
+    NgIf,
+    NgClass
   ],
   templateUrl: './create-thoughts.component.html',
   styleUrl: './create-thoughts.component.css'
@@ -32,14 +34,14 @@ export class CreateThoughtsComponent {
       ],
       author: ['', Validators.compose([
           Validators.required,
-          Validators.minLength(3)
+          Validators.minLength(3),
+          lowerCaseValidator
         ])
       ],
       model: ['modelo1', [Validators.required]]
     })
   }
   handleCreateThought() {
-    console.log(this.form)
     if (this.form.valid) {
       this.service.createThought(this.form.value).subscribe(() => {
         this.router.navigate(['/thoughts'])
@@ -49,5 +51,13 @@ export class CreateThoughtsComponent {
 
   cancelThought() {
     this.router.navigate(['/thoughts'])
+  }
+
+  enableButton(): string {
+    if (this.form.valid) {
+      return 'botao'
+    } else {
+      return 'button__disabled'
+    }
   }
 }
