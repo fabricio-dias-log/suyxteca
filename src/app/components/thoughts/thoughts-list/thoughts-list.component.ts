@@ -19,10 +19,11 @@ import {ThoughtService} from "../thought.service";
 })
 export class ThoughtsListComponent implements OnInit{
   thoughtsList: Thought[] = [];
+  currentPage: number = 1;
   constructor(private service: ThoughtService) {
   }
   ngOnInit() {
-    this.service.getThoughts().subscribe(thoughts => this.thoughtsList = thoughts);
+    this.service.getThoughts(this.currentPage).subscribe(thoughts => this.thoughtsList = thoughts);
   }
 
 }
