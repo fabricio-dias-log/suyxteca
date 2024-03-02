@@ -9,8 +9,9 @@
     </div>
   </div>
 </section>
+<app-load-more-button [hasThoughts]="hasMoreThoughts" (click)="loadMoreThoughts()"></app-load-more-button>
 <ng-template #noThoughts>
   <div class="ff-inter sem-pensamentos">
-    <p>Ainda não há pensamentos cadastrados</p>
+    <p>Não há pensamentos cadastrados</p>
   </div>
 </ng-template>
