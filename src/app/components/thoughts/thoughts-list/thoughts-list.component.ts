@@ -32,6 +32,32 @@ export class ThoughtsListComponent implements OnInit{
     this.service.getThoughts(this.currentPage).subscribe(thoughts => this.thoughtsList = thoughts);
   }
 
+  filterThoughts() {
+    this.currentPage = 1;
+    this.hasMoreThoughts = true;
+
+    this.service.getThoughts(this.currentPage).subscribe(thoughts =>{
+      if (!this.filter) {
+        this.thoughtsList = thoughts;
+        return;
+      }
+
+      let filterUpperCase: string = this.filter.toUpperCase();
+
+      this.thoughtsList = thoughts.filter(thought =>
+        thought.content.toUpperCase().indexOf(filterUpperCase) >= 0 ||
+        thought.author.toUpperCase().indexOf(filterUpperCase) >= 0 ||
+        thought.model.toUpperCase().indexOf(filterUpperCase) >= 0
+      );
+    });
+  }
+
+  compareFields(value: string, fields: string[]): boolean {
+    let trueFields: string[] = [];
+
+    return false;
+  }
+
   loadMoreThoughts() {
     this.service.getThoughts(++this.currentPage).subscribe(thoughts => {
       this.thoughtsList.push(...thoughts);
