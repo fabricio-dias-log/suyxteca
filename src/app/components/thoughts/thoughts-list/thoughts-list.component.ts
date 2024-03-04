@@ -29,7 +29,8 @@ export class ThoughtsListComponent implements OnInit{
   constructor(private service: ThoughtService) {
   }
   ngOnInit() {
-    this.service.getThoughts(this.currentPage).subscribe(thoughts => this.thoughtsList = thoughts);
+
+    this.service.getThoughts(this.currentPage).subscribe(thoughts => this.thoughtsList = thoughts.data);
   }
 
   filterThoughts() {
@@ -37,18 +38,17 @@ export class ThoughtsListComponent implements OnInit{
     this.hasMoreThoughts = true;
 
     this.service.getThoughts(this.currentPage).subscribe(thoughts =>{
-      if (!this.filter) {
+      if (this.filter) {
+        let filterUpperCase: string = this.filter.toUpperCase();
+        this.thoughtsList = thoughts.data.filter(function (thought: Thought){
+            return thought.content.toUpperCase().indexOf(filterUpperCase) >= 0 ||
+              thought.author.toUpperCase().indexOf(filterUpperCase) >= 0 ||
+              thought.model.toUpperCase().indexOf(filterUpperCase) >= 0;
+          }
+        );
+      }else {
         this.thoughtsList = thoughts;
-        return;
       }
-
-      let filterUpperCase: string = this.filter.toUpperCase();
-
-      this.thoughtsList = thoughts.filter(thought =>
-        thought.content.toUpperCase().indexOf(filterUpperCase) >= 0 ||
-        thought.author.toUpperCase().indexOf(filterUpperCase) >= 0 ||
-        thought.model.toUpperCase().indexOf(filterUpperCase) >= 0
-      );
     });
   }
 
@@ -59,11 +59,19 @@ export class ThoughtsListComponent implements OnInit{
   }
 
   loadMoreThoughts() {
-    this.service.getThoughts(++this.currentPage).subscribe(thoughts => {
-      this.thoughtsList.push(...thoughts);
+    if (!this.hasMoreThoughts) return;
 
-      if (!thoughts.length) this.hasMoreThoughts = false;
-    });
+    this.service.getThoughts(++this.currentPage).subscribe(
+      thoughts => {
+        this.thoughtsList = this.thoughtsList.concat(thoughts.data);
+
+        if (!thoughts.data.length) this.hasMoreThoughts = false;
+      },
+      error => {
+        console.error('Error loading more thoughts:', error);
+        // Aqui você pode adicionar mais tratamento de erro, como mostrar uma mensagem para o usuário
+      }
+    );
   }
 
 }
