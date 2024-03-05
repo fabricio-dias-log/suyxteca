@@ -3,13 +3,6 @@
   justify-content: flex-end
 }
 
-.botao-excluir {
-  border: none;
-  cursor: pointer;
-  margin-left: 5px;
-  margin-top: 10px;
-}
-
 .botao-editar {
   border: none;
   cursor: pointer;
@@ -50,6 +43,15 @@
 
 .pensamento-p {
   width: 262px;
+}
+
+.botao-editar,
+.botao-excluir,
+.botao-favorito {
+  border: none;
+  cursor: pointer;
+  margin-right: 5px;
+  margin-top: 15px;
 }
 
 @media screen and (max-width: 768px) {

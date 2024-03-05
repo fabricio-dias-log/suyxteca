@@ -16,9 +16,10 @@ import {RouterLink} from "@angular/router";
 export class ThoughtComponent {
   @Input() thought: Thought = {
     id: 0,
-    content: 'I love Angular',
-    author: 'Fabricio',
-    model: 'modelo3'
+    content: '',
+    author: '',
+    model: 'modelo3',
+    favorite: false
   }
 
   widthThought(): string {
@@ -27,5 +28,13 @@ export class ThoughtComponent {
     }
 
     return 'pensamento-p'
+  }
+
+  changeFavoriteIcon(): string {
+    if (this.thought.favorite == false) {
+      return 'inativo'
+    }else {
+      return 'ativo'
+    }
   }
 }

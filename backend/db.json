@@ -4,49 +4,57 @@
       "id": "2",
       "content": "I'm thinking about the past",
       "author": "Fabricio",
-      "model": "modelo2"
+      "model": "modelo2",
+      "favorite": false
     },
     {
       "id": "3",
       "content": "Testing Update 2",
       "author": "AloneAgain",
-      "model": "modelo3"
+      "model": "modelo3",
+      "favorite": false
     },
     {
       "id": "4",
       "content": "Never go Back",
       "author": "Someone",
-      "model": "modelo2"
+      "model": "modelo2",
+      "favorite": true
     },
     {
       "id": "5",
       "content": "This is a ralley can i toutch your big tits? awesome, im really happy now, i love you",
       "author": "Fabricio Lelé da cuca",
-      "model": "modelo2"
+      "model": "modelo2",
+      "favorite": false
     },
     {
       "id": "a611",
       "content": "This is a ralley can i toutch your big tits? awesome, im really happy now, i love you",
       "author": "aaa",
-      "model": "modelo1"
+      "model": "modelo1",
+      "favorite": false
     },
     {
       "id": "b62c",
       "content": "Amo a Ana demais",
       "author": "aaaaa",
-      "model": "modelo1"
+      "model": "modelo1",
+      "favorite": true
     },
     {
       "id": "443d",
       "content": "This is a ralley can i toutch your big tits? awesome, im really happy now, i love you",
       "author": "someone",
-      "model": "modelo1"
+      "model": "modelo1",
+      "favorite": true
     },
     {
       "id": "556d",
       "content": "Amo a Ana",
       "author": "fabricio",
-      "model": "modelo2"
+      "model": "modelo2",
+      "favorite": false
     }
   ]
 }

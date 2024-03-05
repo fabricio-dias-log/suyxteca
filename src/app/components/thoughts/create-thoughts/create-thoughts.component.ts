@@ -38,7 +38,8 @@ export class CreateThoughtsComponent {
           lowerCaseValidator
         ])
       ],
-      model: ['modelo1', [Validators.required]]
+      model: ['modelo1', [Validators.required]],
+      favorite: [false]
     })
   }
   handleCreateThought() {

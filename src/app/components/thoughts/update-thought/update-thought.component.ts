@@ -1,10 +1,10 @@
-import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
-import {Thought} from "../thought";
-import {ThoughtService} from "../thought.service";
-import {ActivatedRoute, Router} from "@angular/router";
-import {NgClass, NgIf} from "@angular/common";
-import {lowerCaseValidator} from "../../../validators/lowerCase.validator";
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from "@angular/forms";
+import { Thought } from "../thought";
+import { ThoughtService } from "../thought.service";
+import { ActivatedRoute, Router } from "@angular/router";
+import { NgClass, NgIf } from "@angular/common";
+import { lowerCaseValidator } from "../../../validators/lowerCase.validator";
 
 @Component({
   selector: 'app-update-thought',
@@ -18,7 +18,7 @@ import {lowerCaseValidator} from "../../../validators/lowerCase.validator";
   templateUrl: './update-thought.component.html',
   styleUrl: './update-thought.component.css'
 })
-export class UpdateThoughtComponent implements OnInit{
+export class UpdateThoughtComponent implements OnInit {
   form!: FormGroup
   constructor(
     private service: ThoughtService,
@@ -40,27 +40,26 @@ export class UpdateThoughtComponent implements OnInit{
           lowerCaseValidator
         ])
       ],
-      model: ['modelo1', [Validators.required]]
+      model: ['modelo1', [Validators.required]],
+      favorite: [false]
     })
   }
-
-
 
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
 
-    this.service.getThoughtById(id!).subscribe(thought => this.form.setValue(thought) );
+    this.service.getThoughtById(id!).subscribe(thought => this.form.setValue(thought));
   }
 
   handleUpdateThought() {
-    if(this.form.valid){
-      this.service.updateThought(this.form.value).subscribe(()=>{
+    if (this.form.valid) {
+      this.service.updateThought(this.form.value).subscribe(() => {
         this.router.navigate(['/thoughts'])
       });
     }
-
   }
-  cancel(){
+
+  cancel() {
     this.router.navigate(['/thoughts'])
   }
 
