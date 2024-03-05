@@ -45,5 +45,17 @@ export class ThoughtService {
     return this.updateThought(thought);
   }
 
+  listFavoriteThoughts(page:number, filter: string): Observable<Thought[]>{
+    const itemsPerPage = 6;
+
+    let params = new HttpParams()
+      .set('_page', page)
+      .set('_per_page', itemsPerPage)
+      .set('favorite', true)
+
+    return this.http.get<Thought[]>(this.API, {params});
+
+  }
+
 
 }

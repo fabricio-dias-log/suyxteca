@@ -67,4 +67,11 @@ export class ThoughtsListComponent implements OnInit{
     );
   }
 
+  listFavorites() {
+    this.currentPage = 1;
+    this.hasMoreThoughts = true;
+
+    this.service.listFavoriteThoughts(this.currentPage, this.filter).subscribe(thoughts => this.thoughtsList = thoughts);
+  }
+
 }
