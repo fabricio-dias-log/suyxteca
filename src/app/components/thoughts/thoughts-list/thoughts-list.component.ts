@@ -26,10 +26,11 @@ export class ThoughtsListComponent implements OnInit{
   currentPage: number = 1;
   hasMoreThoughts: boolean = true;
   filter: string = '';
+
   constructor(private service: ThoughtService) {
   }
-  ngOnInit() {
 
+  ngOnInit() {
     this.service.getThoughts(this.currentPage).subscribe(thoughts => this.thoughtsList = thoughts.data);
   }
 
@@ -38,7 +39,7 @@ export class ThoughtsListComponent implements OnInit{
     this.hasMoreThoughts = true;
 
     this.service.getThoughts(this.currentPage).subscribe(thoughts =>{
-      if (this.filter) {
+      if (this.filter && this.filter !== '') {
         let filterUpperCase: string = this.filter.toUpperCase();
         this.thoughtsList = thoughts.data.filter(function (thought: Thought){
             return thought.content.toUpperCase().indexOf(filterUpperCase) >= 0 ||
@@ -46,16 +47,8 @@ export class ThoughtsListComponent implements OnInit{
               thought.model.toUpperCase().indexOf(filterUpperCase) >= 0;
           }
         );
-      }else {
-        this.thoughtsList = thoughts;
       }
     });
-  }
-
-  compareFields(value: string, fields: string[]): boolean {
-    let trueFields: string[] = [];
-
-    return false;
   }
 
   loadMoreThoughts() {
