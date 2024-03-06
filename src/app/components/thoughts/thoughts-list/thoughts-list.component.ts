@@ -1,11 +1,12 @@
 import {Component, OnInit} from '@angular/core';
-import {RouterLink} from "@angular/router";
+import {Router, RouterLink} from "@angular/router";
 import {ThoughtComponent} from "../thought/thought.component";
 import {NgForOf, NgIf} from "@angular/common";
 import {Thought} from "../thought";
 import {ThoughtService} from "../thought.service";
 import {LoadMoreButtonComponent} from "./load-more-button/load-more-button.component";
 import {FormsModule} from "@angular/forms";
+import { RouteReuseStrategy } from '@angular/router';
 
 @Component({
   selector: 'app-thoughts-list',
@@ -29,10 +30,11 @@ export class ThoughtsListComponent implements OnInit{
   favorites: boolean = false;
   favoritesList: Thought[] = [];
 
-  constructor(private service: ThoughtService) {
+  constructor(private service: ThoughtService, private router: Router, private routeReuseStrategy: RouteReuseStrategy) {
   }
 
   ngOnInit() {
+    this.router.onSameUrlNavigation
     this.service.getThoughts(this.currentPage, this.favorites).subscribe(thoughts => {
       thoughts.data.map((thought: Thought) => thought.favorite = (thought.favorite == 'true'))
       this.thoughtsList = thoughts.data
@@ -77,6 +79,15 @@ export class ThoughtsListComponent implements OnInit{
       this.thoughtsList = thoughts.data;
       this.favoritesList = thoughts.data;
     });
+  }
+
+  reloadComponent() {
+    this.favorites = false;
+    this.currentPage = 1;
+
+    this.routeReuseStrategy.shouldReuseRoute = () => false;
+    this.router.onSameUrlNavigation = 'reload'
+    this.router.navigate([this.router.url])
   }
 
 }
