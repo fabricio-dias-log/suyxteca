@@ -26,17 +26,15 @@ export class ThoughtsListComponent implements OnInit{
   currentPage: number = 1;
   hasMoreThoughts: boolean = true;
   filter: string = '';
+  favorites: boolean = false;
 
   constructor(private service: ThoughtService) {
   }
 
   ngOnInit() {
-    this.service.getThoughts(this.currentPage).subscribe(thoughts => {
+    this.service.getThoughts(this.currentPage, this.favorites).subscribe(thoughts => {
       thoughts.data.map((thought: Thought) => thought.favorite = (thought.favorite == 'true'))
-    console.log(thoughts.data);
-
       this.thoughtsList = thoughts.data
-
     });
   }
 
@@ -44,7 +42,7 @@ export class ThoughtsListComponent implements OnInit{
     this.currentPage = 1;
     this.hasMoreThoughts = true;
 
-    this.service.getThoughts(this.currentPage).subscribe(thoughts =>{
+    this.service.getThoughts(this.currentPage, this.favorites).subscribe(thoughts =>{
       if (this.filter && this.filter !== '') {
         let filterUpperCase: string = this.filter.toUpperCase();
         this.thoughtsList = thoughts.data.filter(function (thought: Thought){
@@ -58,26 +56,21 @@ export class ThoughtsListComponent implements OnInit{
   }
 
   loadMoreThoughts() {
-    if (!this.hasMoreThoughts) return;
-
-    this.service.getThoughts(++this.currentPage).subscribe(
-      thoughts => {
-        this.thoughtsList = this.thoughtsList.concat(...thoughts.data);
-
-        if (!thoughts.data.length) this.hasMoreThoughts = false;
-      },
-      error => {
-        console.error('Error loading more thoughts:', error);
-        // Aqui você pode adicionar mais tratamento de erro, como mostrar uma mensagem para o usuário
-      }
-    );
+    this.service.getThoughts(++this.currentPage, this.favorites)
+      .subscribe(thoughts => {
+        this.thoughtsList.push(...thoughts.data);
+        if(!thoughts.length) {
+          this.hasMoreThoughts = false
+        }
+      })
   }
 
   listFavorites() {
+    this.favorites = true;
     this.currentPage = 1;
     this.hasMoreThoughts = true;
 
-    this.service.listFavoriteThoughts(this.currentPage, this.filter).subscribe(thoughts =>{
+    this.service.getThoughts(this.currentPage, this.favorites).subscribe(thoughts =>{
       thoughts.data.map((thought: Thought) => thought.favorite = (thought.favorite == 'true'))
 
       this.thoughtsList = thoughts.data

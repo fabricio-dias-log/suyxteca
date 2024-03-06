@@ -42,8 +42,6 @@ export class ThoughtComponent {
   }
 
   updateFavorite(): void {
-    console.log(this.thought);
-
     this.service.changeFavorite(this.thought).subscribe((thought) => {
       thought.favorite = (thought.favorite == 'true');
       this.thought = thought;
