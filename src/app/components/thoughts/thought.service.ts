@@ -10,12 +10,16 @@ export class ThoughtService {
   private readonly API: string = 'http://localhost:3000/thoughts';
   constructor(private http: HttpClient) { }
 
-  getThoughts(page: number): Observable<any>{
+  getThoughts(page: number, favorites: boolean): Observable<any>{
     const itemsPerPage = 6;
 
     let params = new HttpParams()
       .set('_page', page.toString())
       .set('_per_page', itemsPerPage.toString());
+
+    if (favorites) {
+      params = params.set('favorite', 'true');
+    }
 
     return this.http.get<any>(this.API, {params});
   }
@@ -23,6 +27,7 @@ export class ThoughtService {
   createThought(thought: Thought): Observable<Thought>{
     return this.http.post<Thought>(this.API, thought);
   }
+
   getThoughtById(id: string | number): Observable<Thought>{
     return this.http.get<Thought>(`${this.API}/${id}`);
   }
@@ -38,6 +43,13 @@ export class ThoughtService {
 
     return this.http.put<Thought>(url, thought);
   }
+
+  changeFavorite(thought: Thought): Observable<Thought>{
+    thought.favorite = thought.favorite ? 'false' : 'true';
+
+    return this.updateThought(thought);
+  }
+
 
 
 

@@ -1,11 +1,12 @@
 import {Component, OnInit} from '@angular/core';
-import {RouterLink} from "@angular/router";
+import {Router, RouterLink} from "@angular/router";
 import {ThoughtComponent} from "../thought/thought.component";
 import {NgForOf, NgIf} from "@angular/common";
 import {Thought} from "../thought";
 import {ThoughtService} from "../thought.service";
 import {LoadMoreButtonComponent} from "./load-more-button/load-more-button.component";
 import {FormsModule} from "@angular/forms";
+import { RouteReuseStrategy } from '@angular/router';
 
 @Component({
   selector: 'app-thoughts-list',
@@ -26,19 +27,26 @@ export class ThoughtsListComponent implements OnInit{
   currentPage: number = 1;
   hasMoreThoughts: boolean = true;
   filter: string = '';
+  favorites: boolean = false;
+  favoritesList: Thought[] = [];
+  title: string = 'Meu Mural';
 
-  constructor(private service: ThoughtService) {
+  constructor(private service: ThoughtService, private router: Router, private routeReuseStrategy: RouteReuseStrategy) {
   }
 
   ngOnInit() {
-    this.service.getThoughts(this.currentPage).subscribe(thoughts => this.thoughtsList = thoughts.data);
+    this.router.onSameUrlNavigation
+    this.service.getThoughts(this.currentPage, this.favorites).subscribe(thoughts => {
+      thoughts.data.map((thought: Thought) => thought.favorite = (thought.favorite == 'true'))
+      this.thoughtsList = thoughts.data
+    });
   }
 
   filterThoughts() {
     this.currentPage = 1;
     this.hasMoreThoughts = true;
 
-    this.service.getThoughts(this.currentPage).subscribe(thoughts =>{
+    this.service.getThoughts(this.currentPage, this.favorites).subscribe(thoughts =>{
       if (this.filter && this.filter !== '') {
         let filterUpperCase: string = this.filter.toUpperCase();
         this.thoughtsList = thoughts.data.filter(function (thought: Thought){
@@ -52,19 +60,36 @@ export class ThoughtsListComponent implements OnInit{
   }
 
   loadMoreThoughts() {
-    if (!this.hasMoreThoughts) return;
+    this.service.getThoughts(++this.currentPage, this.favorites)
+      .subscribe(thoughts => {
+        this.thoughtsList.push(...thoughts.data);
+        if(!thoughts.length) {
+          this.hasMoreThoughts = false
+        }
+      })
+  }
 
-    this.service.getThoughts(++this.currentPage).subscribe(
-      thoughts => {
-        this.thoughtsList = this.thoughtsList.concat(thoughts.data);
+  listFavorites() {
+    this.title = 'Meus Favoritos';
+    this.favorites = true;
+    this.currentPage = 1;
+    this.hasMoreThoughts = true;
 
-        if (!thoughts.data.length) this.hasMoreThoughts = false;
-      },
-      error => {
-        console.error('Error loading more thoughts:', error);
-        // Aqui você pode adicionar mais tratamento de erro, como mostrar uma mensagem para o usuário
-      }
-    );
+    this.service.getThoughts(this.currentPage, this.favorites).subscribe(thoughts =>{
+      thoughts.data.map((thought: Thought) => thought.favorite = (thought.favorite == 'true'))
+
+      this.thoughtsList = thoughts.data;
+      this.favoritesList = thoughts.data;
+    });
+  }
+
+  reloadComponent() {
+    this.favorites = false;
+    this.currentPage = 1;
+
+    this.routeReuseStrategy.shouldReuseRoute = () => false;
+    this.router.onSameUrlNavigation = 'reload'
+    this.router.navigate([this.router.url])
   }
 
 }
