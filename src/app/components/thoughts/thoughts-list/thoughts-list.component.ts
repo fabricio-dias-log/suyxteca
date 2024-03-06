@@ -29,6 +29,7 @@ export class ThoughtsListComponent implements OnInit{
   filter: string = '';
   favorites: boolean = false;
   favoritesList: Thought[] = [];
+  title: string = 'Meu Mural';
 
   constructor(private service: ThoughtService, private router: Router, private routeReuseStrategy: RouteReuseStrategy) {
   }
@@ -69,6 +70,7 @@ export class ThoughtsListComponent implements OnInit{
   }
 
   listFavorites() {
+    this.title = 'Meus Favoritos';
     this.favorites = true;
     this.currentPage = 1;
     this.hasMoreThoughts = true;

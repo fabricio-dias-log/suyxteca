@@ -4,7 +4,7 @@
       <input type="search" class="filtro" placeholder="O que você procura?" autofocus [(ngModel)]="filter" (keyup)="filterThoughts()">
       <img src="./assets/images/lupa.png" alt="Lupa azul" >
     </div>
-    <h2 class="ff-inter">Meu Mural</h2>
+    <h2 class="ff-inter">{{ title }}</h2>
     <div class="botoes">
       <button class="botao" (click)="reloadComponent()">Meu Mural</button>
       <button class="botao" (click)="listFavorites()">Meus Favoritos</button>
