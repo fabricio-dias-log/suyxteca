@@ -27,6 +27,7 @@ export class ThoughtsListComponent implements OnInit{
   hasMoreThoughts: boolean = true;
   filter: string = '';
   favorites: boolean = false;
+  favoritesList: Thought[] = [];
 
   constructor(private service: ThoughtService) {
   }
@@ -73,7 +74,8 @@ export class ThoughtsListComponent implements OnInit{
     this.service.getThoughts(this.currentPage, this.favorites).subscribe(thoughts =>{
       thoughts.data.map((thought: Thought) => thought.favorite = (thought.favorite == 'true'))
 
-      this.thoughtsList = thoughts.data
+      this.thoughtsList = thoughts.data;
+      this.favoritesList = thoughts.data;
     });
   }
 

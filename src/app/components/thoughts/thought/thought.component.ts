@@ -25,6 +25,8 @@ export class ThoughtComponent {
     favorite: false
   }
 
+  @Input() favorites: Thought[] = [];
+
   widthThought(): string {
     if (this.thought.content.length >= 256) {
       return 'pensamento-g'
@@ -44,6 +46,7 @@ export class ThoughtComponent {
   updateFavorite(): void {
     this.service.changeFavorite(this.thought).subscribe((thought) => {
       thought.favorite = (thought.favorite == 'true');
+      this.favorites.splice(this.favorites.indexOf(this.thought), 1);
       this.thought = thought;
     });
   }
