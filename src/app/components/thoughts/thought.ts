@@ -3,5 +3,5 @@ export interface Thought {
   content: string;
   author: string;
   model: string;
-  favorite: boolean;
+  favorite: boolean | string;
 }

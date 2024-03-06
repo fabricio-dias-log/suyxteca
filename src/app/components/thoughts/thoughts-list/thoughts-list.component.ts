@@ -31,7 +31,13 @@ export class ThoughtsListComponent implements OnInit{
   }
 
   ngOnInit() {
-    this.service.getThoughts(this.currentPage).subscribe(thoughts => this.thoughtsList = thoughts.data);
+    this.service.getThoughts(this.currentPage).subscribe(thoughts => {
+      thoughts.data.map((thought: Thought) => thought.favorite = (thought.favorite == 'true'))
+    console.log(thoughts.data);
+
+      this.thoughtsList = thoughts.data
+
+    });
   }
 
   filterThoughts() {
@@ -56,7 +62,7 @@ export class ThoughtsListComponent implements OnInit{
 
     this.service.getThoughts(++this.currentPage).subscribe(
       thoughts => {
-        this.thoughtsList = this.thoughtsList.concat(thoughts.data);
+        this.thoughtsList = this.thoughtsList.concat(...thoughts.data);
 
         if (!thoughts.data.length) this.hasMoreThoughts = false;
       },
@@ -71,7 +77,11 @@ export class ThoughtsListComponent implements OnInit{
     this.currentPage = 1;
     this.hasMoreThoughts = true;
 
-    this.service.listFavoriteThoughts(this.currentPage, this.filter).subscribe(thoughts => this.thoughtsList = thoughts);
+    this.service.listFavoriteThoughts(this.currentPage, this.filter).subscribe(thoughts =>{
+      thoughts.data.map((thought: Thought) => thought.favorite = (thought.favorite == 'true'))
+
+      this.thoughtsList = thoughts.data
+    });
   }
 
 }

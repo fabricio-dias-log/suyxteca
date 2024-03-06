@@ -40,20 +40,23 @@ export class ThoughtService {
   }
 
   changeFavorite(thought: Thought): Observable<Thought>{
-    thought.favorite = !thought.favorite;
+    console.log(typeof thought.favorite);
+    thought.favorite = thought.favorite ? 'false' : 'true';
+
+
 
     return this.updateThought(thought);
   }
 
-  listFavoriteThoughts(page:number, filter: string): Observable<Thought[]>{
+  listFavoriteThoughts(page:number, filter: string): Observable<any>{
     const itemsPerPage = 6;
 
     let params = new HttpParams()
-      .set('_page', page)
-      .set('_per_page', itemsPerPage)
-      .set('favorite', true)
+      .set('_page', page.toString())
+      .set('_per_page', itemsPerPage.toString())
+      .set('favorite', 'true');
 
-    return this.http.get<Thought[]>(this.API, {params});
+    return this.http.get<any>(this.API, {params});
 
   }
 
